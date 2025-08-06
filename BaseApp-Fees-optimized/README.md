@@ -36,10 +36,20 @@ BaseApp is the comprehensive ERC-4337 Account Abstraction ecosystem on Base chai
 - **Event-driven data collection** only
 - **Maximum indexing speed**
 
-### ✅ 5. SpecVersion 1.2.0
-- Latest Graph protocol features
-- **Declared eth_calls** support (if needed)
-- **Enhanced performance** optimizations
+### ✅ 5. SpecVersion 1.3.0 with Pruning
+- Latest Graph protocol features with **automatic pruning**
+- **Dramatically faster queries** by removing old archival data
+- **Optimized storage** and **reduced memory usage**
+
+### ✅ 6. @derivedFrom Relationships
+- **Optimized Bundle → UserOperation** relationships
+- **Prevents large arrays** from growing unbounded
+- **Efficient one-to-many** data structures
+
+### ✅ 7. Clean Event Processing
+- **Removed unnecessary stake events** for BaseApp activity tracking
+- **Reduced bloat** and **faster indexing**
+- **Focused on relevant data** for ecosystem monitoring
 
 ## 📊 Tracked Contracts & Data Sources
 
@@ -214,10 +224,12 @@ npm run deploy
 ## 📋 Performance Metrics
 
 - **Indexing Speed**: 48% faster than traditional approach
-- **Query Performance**: 28% improvement
+- **Query Performance**: 28% improvement (now **dramatically faster** with pruning)
 - **Storage Efficiency**: 60% reduction in data size
 - **Memory Usage**: 40% less memory consumption
 - **Data Coverage**: 100% of ERC-4337 ecosystem events
+- **Pruning Benefits**: Automatic removal of old archival data
+- **Relationship Optimization**: Efficient @derivedFrom for large datasets
 
 ## 🔧 Best Practices Checklist
 
@@ -227,7 +239,9 @@ npm run deploy
 - [x] **Bytes as IDs** for optimal performance
 - [x] **Zero eth_calls** for maximum speed
 - [x] **concatI32()** for efficient ID generation
-- [x] **SpecVersion 1.2.0** for latest features
+- [x] **SpecVersion 1.3.0** with automatic pruning
+- [x] **@derivedFrom relationships** for efficient data structures
+- [x] **Clean event processing** (removed unnecessary stake events)
 - [x] **Event-driven architecture** only
 - [x] **Optimized sorting fields** (timestamp-based)
 - [x] **Comprehensive data coverage** (ERC-4337 ecosystem)
