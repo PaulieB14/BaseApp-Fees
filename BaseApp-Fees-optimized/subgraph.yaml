@@ -1,6 +1,8 @@
-specVersion: 1.2.0
+specVersion: 1.3.0
 schema:
   file: ./schema.graphql
+indexerHints:
+  prune: auto
 dataSources:
   # EntryPoint - Core ERC-4337 contract
   - kind: ethereum
@@ -35,12 +37,6 @@ dataSources:
           handler: handleUserOperationRevertReason
         - event: SignatureAggregatorChanged(address)
           handler: handleSignatureAggregatorChanged
-        - event: StakeLocked(indexed address,uint256,uint256)
-          handler: handleStakeLocked
-        - event: StakeUnlocked(indexed address,uint256)
-          handler: handleStakeUnlocked
-        - event: StakeWithdrawn(indexed address,indexed address,uint256)
-          handler: handleStakeWithdrawn
 
   # VerifyingSingletonPaymaster - Gas-based paymaster
   - kind: ethereum
@@ -87,7 +83,6 @@ dataSources:
         - PaymasterFeeStats
         - Paymaster
         - EntryPoint
-        - TokenTransfer
       abis:
         - name: BiconomyTokenPaymaster
           file: ./abis/BiconomyTokenPaymaster.json
@@ -125,25 +120,7 @@ dataSources:
         - event: GasWithdrawn(indexed address,indexed address,indexed uint256)
           handler: handleGasWithdrawn
 
-  # ERC-20 Token Transfers (for token-based paymasters)
-  - kind: ethereum
-    name: ERC20
-    network: base
-    source:
-      abi: ERC20
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      file: ./src/mapping.ts
-      entities:
-        - TokenTransfer
-      abis:
-        - name: ERC20
-          file: ./abis/ERC20.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleERC20Transfer
+
 
   # Account Factory (for account creation tracking)
   - kind: ethereum

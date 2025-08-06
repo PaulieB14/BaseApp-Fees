@@ -13,13 +13,8 @@ import {
   AccountDeployed as AccountDeployedEvent,
   UserOperationRevertReason as UserOperationRevertReasonEvent,
   SignatureAggregatorChanged as SignatureAggregatorChangedEvent,
-  StakeLocked as StakeLockedEvent,
-  StakeUnlocked as StakeUnlockedEvent,
-  StakeWithdrawn as StakeWithdrawnEvent,
 } from "../generated/EntryPoint/EntryPoint"
-import {
-  Transfer as TransferEvent,
-} from "../generated/ERC20/ERC20"
+
 import {
   AccountCreated as AccountCreatedEvent,
 } from "../generated/AccountFactory/AccountFactory"
@@ -32,7 +27,6 @@ import {
   Factory, 
   Bundler, 
   Aggregator, 
-  TokenTransfer, 
   AccountCreated 
 } from "../generated/schema"
 
@@ -518,27 +512,7 @@ export function handleTokenPaymentDue(event: TokenPaymentDueEvent): void {
   feeData.save()
 }
 
-// ============================================================================
-// TOKEN TRANSFER EVENTS
-// ============================================================================
 
-export function handleERC20Transfer(event: TransferEvent): void {
-  const from = event.params.from
-  const to = event.params.to
-  const value = event.params.value
-  
-  // Create TokenTransfer entity - ID and timestamp are automatically managed by graph-node
-  const transfer = new TokenTransfer("")
-  transfer.token = event.address
-  transfer.from = from
-  transfer.to = to
-  transfer.amount = value
-  transfer.userOpHash = null // Will be linked if part of user operation
-  transfer.paymaster = Address.zero()
-  transfer.blockNumber = event.block.number
-  transfer.transactionHash = event.transaction.hash
-  transfer.save()
-}
 
 // ============================================================================
 // ACCOUNT FACTORY EVENTS
@@ -585,19 +559,4 @@ export function handleAccountCreated(event: AccountCreatedEvent): void {
   }
 }
 
-// ============================================================================
-// STAKE EVENTS (for completeness)
-// ============================================================================
-
-export function handleStakeLocked(event: StakeLockedEvent): void {
-  // Handle stake locking events
-  // This could be used for bundler/paymaster stake tracking
-}
-
-export function handleStakeUnlocked(event: StakeUnlockedEvent): void {
-  // Handle stake unlocking events
-}
-
-export function handleStakeWithdrawn(event: StakeWithdrawnEvent): void {
-  // Handle stake withdrawal events
-} 
+ 

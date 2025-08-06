@@ -27,6 +27,7 @@ type UserOperation @entity(timeseries: true, immutable: true) {
   paymaster: Bytes
   factory: Bytes
   aggregator: Bytes
+  bundle: Bundle
 }
 
 # Account Management
@@ -139,19 +140,7 @@ type EntryPoint @entity {
   totalPaymasters: BigInt!
 }
 
-# Token Transfers (for token-based paymasters)
-type TokenTransfer @entity(timeseries: true, immutable: true) {
-  id: Int8!
-  timestamp: Timestamp!
-  token: Bytes!
-  from: Bytes!
-  to: Bytes!
-  amount: BigInt!
-  userOpHash: Bytes
-  paymaster: Bytes
-  blockNumber: BigInt!
-  transactionHash: Bytes!
-}
+
 
 # Account Creation Events
 type AccountCreated @entity(timeseries: true, immutable: true) {
@@ -172,7 +161,7 @@ type Bundle @entity(timeseries: true, immutable: true) {
   timestamp: Timestamp!
   bundleHash: Bytes!
   bundler: Bytes!
-  userOps: [Bytes!]!
+  userOps: [UserOperation!]! @derivedFrom(field: "bundle")
   totalGasUsed: BigInt!
   totalGasCost: BigInt!
   blockNumber: BigInt!
